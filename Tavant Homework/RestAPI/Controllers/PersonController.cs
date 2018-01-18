@@ -1,61 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Homework.Console.Classes;
 using Microsoft.AspNetCore.Mvc;
-using RestAPI.Models;
 
-namespace RestAPI.Controllers
+namespace Homework.API.Controllers
 {
     [Produces("application/json")]
     [Route("records")]
     public class PersonController : Controller
     {
 
-        private List<Person> People = new List<Person>();
+        private People _people = new People();
 
-        // POST: api/Person
+        // POST: /records
         [HttpPost]
-        public void Post([FromBody]Person value)
+        public StatusCodeResult Post([FromBody] string value)
         {
-
+            if (string.IsNullOrWhiteSpace(value) || _people.Add(value) != "") return StatusCode(400);
+            return StatusCode(200);
         }
 
-
-        // GET: records
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("name")]
+        public List<Person> Name()
         {
-
-            return new string[] { "value1", "value2" };
-
+            return _people.GetPeopleByName();
         }
 
-        // GET: api/Person/5
-        [HttpGet("{gender}", Name = "Get")]
-        public List<Person> Get()
+        [HttpGet]
+        [Route("birthdate")]
+        public List<Person> Birthdate()
         {
-            var peoplByGender = People.OrderBy(x => x.Gender).ToList();
-            return peoplByGender;
+            return _people.GetPeopleByBirthdate();
         }
 
-        // GET: api/Person/5
-        [HttpGet("{birthdate}", Name = "Get")]
-        public List<Person> Get()
+        [HttpGet]
+        [Route("gender")]
+        public List<Person> Gender()
         {
-            var person = new Person(id, "Last", "Gender", "Color", "5/5/2017");
-            var peoplByGender = People.OrderBy(x => x.Gender).ToList();
-            return peoplByGender;
-        }
-
-        // GET: api/Person/5
-        [HttpGet("{name}", Name = "Get")]
-        public List<Person> Get()
-        {
-            var peoplByGender = People.OrderByDescending(x => x.LastName).ToList();
-            return peoplByGender;
-        }
-
+            return _people.GetPeopleByGender();
+        }   
     }
 }

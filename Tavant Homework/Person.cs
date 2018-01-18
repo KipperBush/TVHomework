@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 
-namespace Homework.Console.Classes
+namespace Homework
 {
     public class Person
     {
@@ -14,15 +13,15 @@ namespace Homework.Console.Classes
 
         public Person(string lastName, string firstName, string gender, string favoriteColor, string dateOfBirth)
         {
-            if (string.IsNullOrWhiteSpace(lastName)) throw new InvalidDataException("Last name required");
+            if (string.IsNullOrWhiteSpace(lastName)) return;
             LastName = lastName;
-            if (string.IsNullOrWhiteSpace(firstName)) throw new InvalidDataException("First name required");
+            if (string.IsNullOrWhiteSpace(firstName)) return;
             FirstName = firstName;
-            if (string.IsNullOrWhiteSpace(gender)) throw new InvalidDataException("Gender required");
+            if (string.IsNullOrWhiteSpace(gender)) return;
             Gender = gender;
-            if (string.IsNullOrWhiteSpace(favoriteColor)) throw new InvalidDataException("Favorite color required");
+            if (string.IsNullOrWhiteSpace(favoriteColor)) return;
             FavoriteColor = favoriteColor;
-            if (!DateTime.TryParse(dateOfBirth, out var dob)) throw new InvalidDataException("Valid birthdate required");
+            if (!DateTime.TryParse(dateOfBirth, out var dob)) return;
             DateOfBirth = dob.ToString("M/d/yyyy", CultureInfo.InvariantCulture);
         }
     }

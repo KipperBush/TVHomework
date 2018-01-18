@@ -25,7 +25,7 @@ namespace Homework.Console.Classes
                 splitPS = personString.Split(' ').Select(s => s.Trim()).ToList();
             else return "no delimiter was found";
 
-            if (splitPS.Count < 5) return "too few arguments to add a person";
+            if (splitPS.Count < 5) return "too few arguments too add a person";
             try
             {
                 _people.Add(new Person(splitPS[0], splitPS[1], splitPS[2], splitPS[3], splitPS[4]));
@@ -37,14 +37,14 @@ namespace Homework.Console.Classes
             return "";
         }
 
-        public void Clear()
-        {
-            _people.Clear();
-        }
-
         public int Count()
         {
             return _people.Count;
+        }
+
+        public void Clear()
+        {
+            _people.Clear();
         }
 
         public List<Person> GetPeopleByGender()
